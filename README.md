@@ -67,5 +67,5 @@ Per lanciare la simulazione completa:
 
 ## 📝 Note
 
-Questo pacchetto fa parte del progetto Armando Simulation ed è progettato per funzionare insieme al pacchetto `armando_moveit` per il controllo del movimento del braccio robotico.
+
 

@@ -42,7 +42,9 @@
             <material name="red"/>
         </visual>
         <collision>
-            <geometry><box size="0.07 0.07 0.08"/></geometry>
+            <geometry>
+                <mesh filename="file://${pkg_path}/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
             <origin rpy="0 0 0" xyz="0 0 0"/>
         </collision>
         <inertial>
@@ -66,7 +68,9 @@
             <material name="green"/>
         </visual>
         <collision>
-            <geometry><box size="0.05 0.05 0.02"/></geometry>
+            <geometry>
+                <mesh filename="file://${pkg_path}/meshes/base_turn.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
             <origin rpy="0 0 0" xyz="0 0 0"/>
         </collision>
         <inertial>
@@ -91,7 +95,9 @@
             <material name="blue"/>
         </visual>
         <collision>
-            <geometry><box size="0.05 0.05 0.01"/></geometry>
+            <geometry>
+                <mesh filename="file://${pkg_path}/meshes/base_turn_table_rot.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
             <origin rpy="0 0 0" xyz="0 0 0"/>
         </collision>
         <inertial>
@@ -115,7 +121,9 @@
             <material name="yellow"/>
         </visual>
         <collision>
-            <geometry><box size="0.03 0.03 0.03"/></geometry>
+            <geometry>
+                <mesh filename="file://${pkg_path}/meshes/dyn.stl" scale="0.01 0.01 0.01"/>
+            </geometry>
             <origin rpy="0 0 0" xyz="0 0 0"/>
         </collision>
         <inertial>
@@ -149,7 +157,9 @@
             <material name="magenta"/>
         </visual>
         <collision>
-            <geometry><box size="0.04 0.05 0.02"/></geometry>
+            <geometry>
+                <mesh filename="file://${pkg_path}/meshes/f4_n_f3.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
             <origin rpy="0 0 0" xyz="0 0 0"/>
         </collision>
         <inertial>
@@ -173,7 +183,9 @@
             <material name="cyan"/>
         </visual>
         <collision>
-            <geometry><box size="0.03 0.03 0.03"/></geometry>
+            <geometry>
+                <mesh filename="file://${pkg_path}/meshes/dyn.stl" scale="0.01 0.01 0.01"/>
+            </geometry>
             <origin rpy="0 0 0" xyz="0 0 0"/>
         </collision>
         <inertial>
@@ -207,7 +219,9 @@
             <material name="orange"/>
         </visual>
         <collision>
-            <geometry><box size="0.04 0.05 0.02"/></geometry>
+            <geometry>
+                <mesh filename="file://${pkg_path}/meshes/f4_n_f3.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
             <origin rpy="0 0 0" xyz="0 0 0"/>
         </collision>
         <inertial>
@@ -231,7 +245,9 @@
             <material name="gray"/>
         </visual>
         <collision>
-            <geometry><box size="0.03 0.03 0.03"/></geometry>
+            <geometry>
+                <mesh filename="file://${pkg_path}/meshes/dyn.stl" scale="0.01 0.01 0.01"/>
+            </geometry>
             <origin rpy="0 0 0" xyz="0 0 0"/>
         </collision>
         <inertial>
@@ -265,7 +281,9 @@
             <material name="blue"/>
         </visual>
         <collision>
-            <geometry><box size="0.05 0.02 0.01"/></geometry>
+            <geometry>
+                <mesh filename="file://${pkg_path}/meshes/wrist.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
             <origin rpy="0 0 0" xyz="0 0 0"/>
         </collision>
         <inertial>
@@ -289,7 +307,9 @@
             <material name="cyan"/>
         </visual>
         <collision>
-            <geometry><box size="0.03 0.03 0.03"/></geometry>
+            <geometry>
+                <mesh filename="file://${pkg_path}/meshes/dyn.stl" scale="0.01 0.01 0.01"/>
+            </geometry>
             <origin rpy="0 0 0" xyz="0 0 0"/>
         </collision>
         <inertial>
@@ -323,7 +343,9 @@
             <material name="orange"/>
         </visual>
         <collision>
-            <geometry><box size="0.03 0.03 0.02"/></geometry>
+            <geometry>
+                <mesh filename="file://${pkg_path}/meshes/the_crawer_base.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
             <origin rpy="0 0 0" xyz="0 0 0"/>
         </collision>
         <inertial>
@@ -332,28 +354,12 @@
         </inertial>
     </link>
 
-    <joint name="gripper_actuator_joint" type="revolute">
-        <parent link="crawer_base"/>
-        <child link="gripper_actuator_link"/>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <axis xyz="0 0 1"/>
-        <limit effort="50" velocity="1.0" lower="-0.6" upper="0.8"/>
-    </joint>
 
-    <link name="gripper_actuator_link">
-        <inertial>
-            <mass value="0.001"/>
-            <inertia ixx="1e-6" ixy="0.0" ixz="0.0" iyy="1e-6" iyz="0.0" izz="1e-6"/>
-        </inertial>
-    </link>
-
-    <joint name="crawer_base_crawer_left" type="prismatic">
+    <!-- Le pinze rimangono solo come visualizzazione grafica: link fissi -->
+    <joint name="crawer_base_crawer_left" type="fixed">
         <parent link="crawer_base"/>
         <child link="crawer_left"/>
         <origin xyz="-0.03 0.015 0.01" rpy="0 -1.57 0"/>
-        <axis xyz="0 0 1"/>
-        <limit effort="50" velocity="0.2" lower="-0.012" upper="0.015"/>
-        <mimic joint="gripper_actuator_joint" multiplier="0.01875" offset="0.0"/>
     </joint>
 
     <link name="crawer_left">
@@ -365,7 +371,9 @@
             <material name="gray"/>
         </visual>
         <collision>
-            <geometry><box size="0.04 0.01 0.01"/></geometry>
+            <geometry>
+                <mesh filename="file://${pkg_path}/meshes/the_crawer.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
             <origin rpy="0 0 0" xyz="0 0 0"/>
         </collision>
         <inertial>
@@ -374,13 +382,10 @@
         </inertial>
     </link>
 
-    <joint name="crawer_base_crawer_right" type="prismatic">
+    <joint name="crawer_base_crawer_right" type="fixed">
         <parent link="crawer_base"/>
         <child link="crawer_right"/>
         <origin xyz="0.03 0.015 0.01" rpy="3.1415 -1.57 0"/>
-        <axis xyz="0 0 -1"/>
-        <limit effort="50" velocity="0.2" lower="-0.015" upper="0.012"/>
-        <mimic joint="gripper_actuator_joint" multiplier="-0.01875" offset="0.0"/>
     </joint>
 
     <link name="crawer_right">
@@ -392,7 +397,9 @@
             <material name="green"/>
         </visual>
         <collision>
-            <geometry><box size="0.04 0.01 0.01"/></geometry>
+            <geometry>
+                <mesh filename="file://${pkg_path}/meshes/the_crawer.stl" scale="0.001 0.001 0.001"/>
+            </geometry>
             <origin rpy="0 0 0" xyz="0 0 0"/>
         </collision>
         <inertial>
@@ -437,7 +444,6 @@
         <xacro:hardware_joint name="j1" initial_pos="0.0"/>
         <xacro:hardware_joint name="j2" initial_pos="0.0"/>
         <xacro:hardware_joint name="j3" initial_pos="0.0"/>
-        <xacro:hardware_joint name="gripper_actuator_joint" initial_pos="0.0"/>
     </ros2_control>
 
 </robot>

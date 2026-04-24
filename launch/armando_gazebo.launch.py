@@ -1,5 +1,5 @@
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, RegisterEventHandler
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, RegisterEventHandler, SetEnvironmentVariable
 from launch.substitutions import LaunchConfiguration, PathJoinSubstitution, Command
 from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
@@ -12,10 +12,28 @@ import os
 def generate_launch_description():
     # Ottieni il percorso del pacchetto
     pkg_description_path = get_package_share_directory('armando_description')
-
+    pkg_share = get_package_share_directory('armando_description')
     # Percorso del file URDF di assemblaggio
     urdf_path = os.path.join(pkg_description_path, "urdf", "arm.urdf.xacro")
     default_world_path = os.path.join(pkg_description_path, "worlds", "armando_workbench.sdf")
+    
+    # Used to enable Gazebo simulation time
+    declare_use_sim_time = DeclareLaunchArgument(
+        'use_sim_time',
+        default_value='true',
+    )
+
+    # Include worlds directory in GZ_SIM_RESOURCE_PATH
+    gz_resource_path = SetEnvironmentVariable(
+        name='GZ_SIM_RESOURCE_PATH',
+        value=os.path.join(pkg_share, 'worlds') + ':' + os.path.join(pkg_share, 'models') + ':' + os.path.dirname(pkg_share) 
+    )
+
+
+    gz_gui_config_path = SetEnvironmentVariable(
+            name='GZ_GUI_CONFIG_PATH',
+            value=os.path.join(pkg_share, 'conf', 'gazebo.config')
+        )
 
     # Argomento per avviare Gazebo con o senza GUI
     gui_arg = DeclareLaunchArgument(
@@ -96,33 +114,17 @@ def generate_launch_description():
         arguments=['joint_trajectory_controller', '--controller-manager', '/controller_manager'],
     )
 
-    # Spawner del gripper controller
-    spawn_gripper_controller = Node(
-        package='controller_manager',
-        executable='spawner',
-        arguments=['gripper_controller', '--controller-manager', '/controller_manager', '--inactive'],
-    )
 
-    # Bridge ROS <-> Gazebo per la camera
-    bridge_camera_node = Node(
+    # Bridge ROS <-> Gazebo unificato (camera e pose)
+    bridge_node = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
         arguments=[
             '/camera@sensor_msgs/msg/Image@gz.msgs.Image',
             '/camera_info@sensor_msgs/msg/CameraInfo@gz.msgs.CameraInfo',
+            '/world/armando_workbench/dynamic_pose/info@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V',
             '--ros-args',
             '-r', '/camera:=/camera/image_raw',
-        ],
-        output='screen',
-    )
-
-    # Bridge ROS <-> Gazebo per le pose degli ostacoli dinamici
-    # Usa il topic dynamic_pose/info che contiene tutte le pose dinamiche
-    bridge_poses_node = Node(
-        package='ros_gz_bridge',
-        executable='parameter_bridge',
-        arguments=[
-            '/world/armando_workbench/dynamic_pose/info@tf2_msgs/msg/TFMessage[gz.msgs.Pose_V',
         ],
         output='screen',
     )
@@ -150,24 +152,19 @@ def generate_launch_description():
         )
     )
 
-    load_gripper_controller = RegisterEventHandler(
-        event_handler=OnProcessExit(
-            target_action=spawn_position_controller,
-            on_exit=[spawn_gripper_controller],
-        )
-    )
 
     return LaunchDescription([
+        declare_use_sim_time,
+        gz_resource_path,
+        gz_gui_config_path,
+        robot_state_publisher_node,
         gui_arg,
         world_arg,
-        robot_state_publisher_node,
         gazebo_launch,
         spawn_robot_node,
         load_joint_state_broadcaster,
         load_joint_trajectory_controller,
         load_position_controller,
-        load_gripper_controller,
-        bridge_camera_node,
-        bridge_poses_node,
+        bridge_node,
     ])
 
