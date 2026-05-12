@@ -9,7 +9,7 @@ import os
 def generate_launch_description():
     # Ottieni il percorso del pacchetto
     pkg_description_path = get_package_share_directory('armando_description')
-
+    use_sim_time = True
     # Percorsi dei file
     urdf_path = os.path.join(pkg_description_path, "urdf", "arm.urdf.xacro")
     rviz_config_path = os.path.join(pkg_description_path, "config", "rviz", "armando_display.rviz")
@@ -30,7 +30,7 @@ def generate_launch_description():
         package="robot_state_publisher",
         executable="robot_state_publisher",
         output="screen",
-        parameters=[robot_description_param],
+        parameters=[robot_description_param, {'use_sim_time': use_sim_time}],
     )
 
     # Nodo: joint_state_publisher_gui

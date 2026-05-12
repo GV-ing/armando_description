@@ -17,24 +17,38 @@
         </visual>
     </link>
 
-    <!-- Sensore camera Gazebo -->
+    <!-- ==== NUOVO: Frame Ottico per la Computer Vision ==== -->
+    <joint name="camera_optical_joint" type="fixed">
+        <parent link="camera_link"/>
+        <child link="camera_optical_frame"/>
+        <!-- Allinea l'asse X di ROS all'asse Z della profondità ottica (OpenCV) -->
+        <origin xyz="0 0 0" rpy="-1.57079632679 0 -1.57079632679"/>
+    </joint>
+
+    <link name="camera_optical_frame"/>
+
+    <!-- ==== Plugin Sensore ==== -->
     <gazebo reference="camera_link">
         <sensor name="camera" type="camera">
             <camera>
                 <horizontal_fov>1.047</horizontal_fov>
                 <image>
-                    <width>320</width>
-                    <height>240</height>
+                    <width>1920</width>
+                    <height>1080</height>
                 </image>
                 <clip>
                     <near>0.1</near>
-                    <far>100</far>
+                    <far>5</far>
                 </clip>
             </camera>
             <always_on>1</always_on>
-            <update_rate>30</update_rate>
-            <visualize>true</visualize>
+            <update_rate>30</update_rate> 
+            <!-- Ti consiglio di metterlo a true durante il debug per vedere il cono visivo in Gazebo -->
+            <visualize>true</visualize> 
             <topic>camera</topic>
+            
+            <!-- CRUCIALE: Gazebo firmerà i messaggi con il frame ottico! -->
+            <gz_frame_id>camera_optical_frame</gz_frame_id> 
         </sensor>
     </gazebo>
 

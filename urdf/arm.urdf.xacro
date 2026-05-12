@@ -19,7 +19,7 @@
     <!-- Corpo del robot, plugin Gazebo e ros2_control -->
     <xacro:include filename="armando_body.urdf.xacro"/>
 
-    <!-- Camera end-effector - commentare per escludere dal modello 
-    <xacro:include filename="armando_camera.urdf.xacro"/>-->
+    <!-- Camera end-effector - commentare per escludere dal modello -->
+    <xacro:include filename="armando_camera.urdf.xacro"/>
 
 </robot>
