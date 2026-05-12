@@ -84,7 +84,7 @@
         <child link="base_turn_rot"/>
         <origin xyz="-0.0 0.0155 0.013" rpy="0 0 -1.57"/>
         <axis xyz="0 0 1"/>
-        <limit effort="300" velocity="1.0" lower="-2.57" upper="2.57"/>
+        <limit effort="300" velocity="1.0" lower="-3.14" upper="3.14"/>
     </joint>
 
     <link name="base_turn_rot">

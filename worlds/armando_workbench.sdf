@@ -207,7 +207,7 @@
     <model name="obstacle_box_a">
       <static>false</static>
       <!-- Spostato da 0.2 a -0.25 -->
-      <pose>-0.1 -0.1 0.455 0 0 0.785398</pose>
+      <pose>-0.12 -0.12 0.455 0 0 0.785398</pose>
       <link name="link">
         <inertial>
           <mass>0.5</mass>
@@ -253,7 +253,7 @@
     <model name="obstacle_box_b">
       <static>false</static>
       <!-- Spostato da 0.55 a 0.10 -->
-      <pose>0.10 -0.10 0.455 0 0 0.785398</pose>
+      <pose>0.12 -0.12 0.455 0 0 0.785398</pose>
       <link name="link">
         <inertial>
           <mass>0.4</mass>
@@ -295,7 +295,7 @@
     <model name="obstacle_box_c">
       <static>false</static>
       <!-- Spostato da 0.15 a -0.30 -->
-      <pose>-0.10 0.10 0.450 0 0 0.785398</pose>
+      <pose>-0.12 0.12 0.450 0 0 0.785398</pose>
       <link name="link">
         <inertial>
           <mass>0.3</mass>
@@ -336,7 +336,7 @@
     <!-- OBSTACLE BOX D (Marker ID 3) -->
     <model name="obstacle_box_d">
       <static>false</static>
-      <pose>0.10 0.10 0.455 0 0 0.785398</pose>
+      <pose>0.12 0.12 0.455 0 0 0.785398</pose>
       <link name="link">
         <inertial>
           <mass>0.3</mass>

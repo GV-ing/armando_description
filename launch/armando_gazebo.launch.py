@@ -140,9 +140,9 @@ def generate_launch_description():
         executable='marker_publisher',
         name='aruco_marker_publisher',
         parameters=[{
-            'image_is_rectified': True,
+            #'image_is_rectified': True,
             'marker_size': 0.1,
-            'reference_frame': 'world',
+            'reference_frame': 'base_link',
             'camera_frame': 'camera_optical_frame',
             'use_sim_time': True,
             'dictionary': 'DICT_ARUCO_ORIGINAL',
