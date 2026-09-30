@@ -328,7 +328,6 @@
 
     <link name="dyn5_r"/>
 
-    <!-- ==== CRUCIALE: Previene la fusione del link della pinza con gli altri link ==== -->
     <gazebo reference="wrist_rotate_dyn5">
         <preserveFixedJoint>true</preserveFixedJoint>
     </gazebo>
